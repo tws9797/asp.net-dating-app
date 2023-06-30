@@ -54,8 +54,12 @@ public class AccountController: BaseApiController
         if (user == null) return Unauthorized("Invalid username");
 
         using var hmac = new HMACSHA256(user.PasswordSalt);
+        
+        Console.Error.WriteLine(loginDto.Password);
 
         var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+        
+        Console.Error.WriteLine("Computed hash: " + computedHash);
         
         if (computedHash.Where((t, i) => t != user.PasswordHash[i]).Any())
         {
