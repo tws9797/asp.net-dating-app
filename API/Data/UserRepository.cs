@@ -51,6 +51,8 @@ public class UserRepository: IUserRepository
     public async Task<IEnumerable<MemberDto>> GetMembersAsync()
     {
         return await _context.Users
+            .Take(4)
+            .Skip(4)
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .ToListAsync();
     }
